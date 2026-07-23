@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementSystem.Models
 {
-    public class Manager
+    public class Manager : Employee
     {
+        public List<Employee> TeamMembers {get; }= new();
+        
+        public override string GetInfo()
+        {
+            return base.GetInfo() +
+            $"\nManaged Team Size: {TeamMembers.Count}";
+        }
 
     }
 }
