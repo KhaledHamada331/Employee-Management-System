@@ -22,6 +22,18 @@ namespace EmployeeManagementSystem.Services
             {
                 return "Invalid employee data.";
             }
+            if(string.IsNullOrWhiteSpace(employee.Name))
+            {
+                return "Invalid employee name.";
+            }
+            if(employee.Salary <= 0)
+            {
+                return "Invalid Salary.";            
+            }
+            if (!departments.ContainsKey(employee.DepartmentId))
+            {
+                return "Invalid department ID.";
+            }
             foreach (var existingEmployee in activeEmployees)
             {
                 if (existingEmployee.Id == employee.Id)
@@ -33,5 +45,6 @@ namespace EmployeeManagementSystem.Services
             actionHistory.Push($"Added Employee: {employee.Name}");
             return "Employee added successfully.";
         }
+    
     }
 }
