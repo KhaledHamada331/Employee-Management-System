@@ -16,5 +16,22 @@ namespace EmployeeManagementSystem.Services
         HashSet<string> companySkills = new HashSet<string>();
 
 
+        public string AddEmployee(Employee employee)
+        {
+            if (employee == null)
+            {
+                return "Invalid employee data.";
+            }
+            foreach (var existingEmployee in activeEmployees)
+            {
+                if (existingEmployee.Id == employee.Id)
+                {
+                    return "Employee with the same ID already exists.";
+                }
+            }
+            activeEmployees.Add(employee);
+            actionHistory.Push($"Added Employee: {employee.Name}");
+            return "Employee added successfully.";
+        }
     }
 }
