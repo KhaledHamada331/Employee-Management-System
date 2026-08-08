@@ -23,17 +23,24 @@ namespace EmployeeManagementSystem.Services
             {
                 return "Invalid employee data.";
             }
-            if(string.IsNullOrWhiteSpace(employee.Name))
+            if (string.IsNullOrWhiteSpace(employee.Name))
             {
                 return "Invalid employee name.";
             }
-            if(employee.Salary <= 0)
+            if (employee.Salary <= 0)
             {
-                return "Invalid Salary.";            
+                return "Invalid Salary.";
             }
             if (!departments.ContainsKey(employee.DepartmentId))
             {
                 return "Invalid department ID.";
+            }
+            foreach (var existingEmployee in onboarding)
+            {
+                if (existingEmployee.Id == employee.Id)
+                {
+                    return "Employee with the same ID already exists.";
+                }
             }
             foreach (var existingEmployee in activeEmployees)
             {
@@ -42,9 +49,21 @@ namespace EmployeeManagementSystem.Services
                     return "Employee with the same ID already exists.";
                 }
             }
+            onboarding.Enqueue(employee);
+            actionHistory.Push($"Added onboarding Employee: {employee.Name}");
+            return $"Employee '{employee.Name}' added to onboarding successfully.";
+        }
+
+        public string CompleteOnboarding()
+        {
+            if (onboarding.Count == 0)
+            {
+                return "No employees are currently waiting for onboarding.";
+            }
+            var employee = onboarding.Dequeue();
             activeEmployees.Add(employee);
-            actionHistory.Push($"Added Employee: {employee.Name}");
-            return "Employee added successfully.";
+            actionHistory.Push($"Completed onboarding for Employee: {employee.Name}");
+            return $"Employee '{employee.Name}' completed onboarding and is now active.";
         }
 
         public string AddDepartment(Department department)
