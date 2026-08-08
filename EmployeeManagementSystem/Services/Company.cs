@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using EmployeeManagementSystem.Models;
@@ -64,6 +65,27 @@ namespace EmployeeManagementSystem.Services
             actionHistory.Push($"Completed onboarding for Employee: {employee.Name}");
             return $"Employee '{employee.Name}' completed onboarding and is now active.";
         }
+
+        public string AddDepartment(Department department)
+        {
+            if(department is null)
+            {
+                return "Invalid department data.";
+            }
+            if(string.IsNullOrWhiteSpace(department.Name))
+            {
+                return "Invalid department name.";
+            }
+            if(departments.ContainsKey(department.Id))
+            {
+                return "Department with the same ID already exists."; 
+            }
+            departments.Add(department.Id , department);
+            actionHistory.Push($"Added Department: {department.Name}");
+            return "Department added successfully.";
+            
+        }
+
 
     }
 }
