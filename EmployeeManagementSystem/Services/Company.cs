@@ -86,5 +86,35 @@ namespace EmployeeManagementSystem.Services
             
         }
 
+                public Employee GetEmployee(string query)
+        {
+            if(string.IsNullOrWhiteSpace(query))
+            {
+                throw new ArgumentException("Input cannot be null or empty.");
+            }
+            if(int.TryParse(query, out int employeeId))
+            {
+                foreach (var employee in activeEmployees)
+                {
+                    if (employee.Id == employeeId)
+                    {
+                        return employee;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var employee in activeEmployees)
+                {
+                    if (employee.Name.Equals(query, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return employee;
+                    }
+                }
+            }
+            throw new InvalidOperationException("Employee not found.");
+
+        }
+        
     }
 }
