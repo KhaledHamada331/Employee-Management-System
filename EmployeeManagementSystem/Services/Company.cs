@@ -115,6 +115,17 @@ namespace EmployeeManagementSystem.Services
             throw new InvalidOperationException("Employee not found.");
 
         }
+
+        public decimal CalculateAverageSalary()
+        {
+            decimal totalSalary = 0.0m;
+            int employeeCount = activeEmployees.Count;
+            foreach (var employee in activeEmployees)
+            {
+                totalSalary += employee.Salary;
+            }
+            return employeeCount > 0 ? totalSalary / employeeCount : 0.0m;
+        }
         
     }
 }
