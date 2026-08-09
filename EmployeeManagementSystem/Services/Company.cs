@@ -86,7 +86,7 @@ namespace EmployeeManagementSystem.Services
             
         }
 
-                public Employee GetEmployee(string query)
+        public Employee GetEmployee(string query)
         {
             if(string.IsNullOrWhiteSpace(query))
             {
@@ -125,6 +125,28 @@ namespace EmployeeManagementSystem.Services
                 totalSalary += employee.Salary;
             }
             return employeeCount > 0 ? totalSalary / employeeCount : 0.0m;
+        }
+
+        public string GetEmployeeCountByDepartment()
+        {
+            if (departments.Count == 0)
+            {
+                return "No departments available.";
+            }
+            string result = "Employee Count by Department:\n";
+            foreach (var departmentID in departments.Keys)
+            {
+                int count = 0 ;
+                foreach (var employee in activeEmployees)
+                {
+                    if (employee.DepartmentId == departmentID)
+                    {
+                        count++;
+                    }
+                }
+                result += $"Department : {departments[departmentID].Name}, Employee Count: {count}\n";
+            }
+            return result;
         }
         
     }
