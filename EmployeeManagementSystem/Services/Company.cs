@@ -149,5 +149,26 @@ namespace EmployeeManagementSystem.Services
             return result;
         }
         
+        public List<Employee> GetEmployeesByDepartment(int departmentId)
+        {
+            if (departments.Count == 0)
+            {
+                throw new InvalidOperationException("There are no departments available.");
+            }
+            if(!departments.ContainsKey(departmentId))
+            {
+                throw new KeyNotFoundException($"There is no department with ID {departmentId}.");
+            } 
+            List<Employee> employees = new();
+            foreach(var employee in activeEmployees)
+            {
+                if(employee.DepartmentId == departmentId)
+                {
+                    employees.Add(employee);
+                }
+            }
+            return employees ;
+
+        }
     }
 }
