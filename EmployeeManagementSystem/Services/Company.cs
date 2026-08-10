@@ -68,31 +68,31 @@ namespace EmployeeManagementSystem.Services
 
         public string AddDepartment(Department department)
         {
-            if(department is null)
+            if (department is null)
             {
                 return "Invalid department data.";
             }
-            if(string.IsNullOrWhiteSpace(department.Name))
+            if (string.IsNullOrWhiteSpace(department.Name))
             {
                 return "Invalid department name.";
             }
-            if(departments.ContainsKey(department.Id))
+            if (departments.ContainsKey(department.Id))
             {
-                return "Department with the same ID already exists."; 
+                return "Department with the same ID already exists.";
             }
-            departments.Add(department.Id , department);
+            departments.Add(department.Id, department);
             actionHistory.Push($"Added Department: {department.Name}");
             return "Department added successfully.";
-            
+
         }
 
         public Employee GetEmployee(string query)
         {
-            if(string.IsNullOrWhiteSpace(query))
+            if (string.IsNullOrWhiteSpace(query))
             {
                 throw new ArgumentException("Input cannot be null or empty.");
             }
-            if(int.TryParse(query, out int employeeId))
+            if (int.TryParse(query, out int employeeId))
             {
                 foreach (var employee in activeEmployees)
                 {
@@ -136,7 +136,7 @@ namespace EmployeeManagementSystem.Services
             string result = "Employee Count by Department:\n";
             foreach (var departmentID in departments.Keys)
             {
-                int count = 0 ;
+                int count = 0;
                 foreach (var employee in activeEmployees)
                 {
                     if (employee.DepartmentId == departmentID)
@@ -148,27 +148,49 @@ namespace EmployeeManagementSystem.Services
             }
             return result;
         }
-        
+
         public List<Employee> GetEmployeesByDepartment(int departmentId)
         {
             if (departments.Count == 0)
             {
                 throw new InvalidOperationException("There are no departments available.");
             }
-            if(!departments.ContainsKey(departmentId))
+            if (!departments.ContainsKey(departmentId))
             {
                 throw new KeyNotFoundException($"There is no department with ID {departmentId}.");
-            } 
+            }
             List<Employee> employees = new();
-            foreach(var employee in activeEmployees)
+            foreach (var employee in activeEmployees)
             {
-                if(employee.DepartmentId == departmentId)
+                if (employee.DepartmentId == departmentId)
                 {
                     employees.Add(employee);
                 }
             }
-            return employees ;
+            return employees;
 
+        }
+
+        public string GetActionHistory()
+        {
+            if (actionHistory.Count == 0)
+            {
+                return "No actions have been performed yet.";
+            }
+            string result = "Action History:\n";
+            foreach (var action in actionHistory)
+            {
+                result += $"{action}\n";
+            }
+            // Alternative approach using Pop() on a temporary stack.
+            // This preserves the original actionHistory stack.
+
+            // Stack<string> tempStack = new Stack<string>(actionHistory);
+            // while (tempStack.Count > 0)
+            // {
+            //     result += $"{tempStack.Pop()}\n";
+            // }
+            return result;
         }
     }
 }
