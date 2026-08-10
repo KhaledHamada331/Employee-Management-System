@@ -206,5 +206,21 @@ namespace EmployeeManagementSystem.Services
             }
             return result;
         }
+    
+        public string AddSkill(string skill)
+        {
+            if (string.IsNullOrWhiteSpace(skill))
+            {
+                return "Invalid skill.";
+            }
+            
+            if (!companySkills.Add(skill.ToLowerInvariant()))
+            {
+                return $"Skill '{skill}' already exists in the company.";
+            }
+           
+            actionHistory.Push($"Added Skill: {skill}");
+            return $"Skill '{skill}' added to the company successfully.";
+        }
     }
 }
