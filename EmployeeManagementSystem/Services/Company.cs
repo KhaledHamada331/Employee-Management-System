@@ -192,5 +192,19 @@ namespace EmployeeManagementSystem.Services
             // }
             return result;
         }
+    
+        public string GetCompanySkills()
+        {
+            if (companySkills.Count == 0)
+            {
+                return "No skills have been added to the company.";
+            }
+            string result = "Company Skills:\n";
+            foreach (var skill in companySkills)
+            {
+                result += $"{skill}\n";
+            }
+            return result;
+        }
     }
 }
