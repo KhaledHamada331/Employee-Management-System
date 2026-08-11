@@ -15,6 +15,8 @@ namespace EmployeeManagementSystem.Services
         Queue<Employee> onboarding = new Queue<Employee>();
         Stack<string> actionHistory = new Stack<string>();
         HashSet<string> companySkills = new HashSet<string>();
+        int employeeId = 0;
+        int departmentId = 0;
 
 
         public string AddEmployee(Employee employee)
@@ -35,20 +37,7 @@ namespace EmployeeManagementSystem.Services
             {
                 return "Invalid department ID.";
             }
-            foreach (var existingEmployee in onboarding)
-            {
-                if (existingEmployee.Id == employee.Id)
-                {
-                    return "Employee with the same ID already exists.";
-                }
-            }
-            foreach (var existingEmployee in activeEmployees)
-            {
-                if (existingEmployee.Id == employee.Id)
-                {
-                    return "Employee with the same ID already exists.";
-                }
-            }
+            employee.Id = ++employeeId; // Assign a unique ID to the employee
             onboarding.Enqueue(employee);
             actionHistory.Push($"Added onboarding Employee: {employee.Name}");
             return $"Employee '{employee.Name}' added to onboarding successfully.";
@@ -76,10 +65,7 @@ namespace EmployeeManagementSystem.Services
             {
                 return "Invalid department name.";
             }
-            if (departments.ContainsKey(department.Id))
-            {
-                return "Department with the same ID already exists.";
-            }
+            department.Id = ++departmentId; // Assign a unique ID to the department
             departments.Add(department.Id, department);
             actionHistory.Push($"Added Department: {department.Name}");
             return "Department added successfully.";
