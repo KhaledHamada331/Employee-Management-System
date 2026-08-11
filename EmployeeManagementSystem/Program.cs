@@ -9,6 +9,7 @@ namespace EmployeeManagementSystem
         {
             int choice = -1;
             Company company = new Company();
+            SeedData(company);
             do
             {
 
@@ -155,6 +156,83 @@ namespace EmployeeManagementSystem
             Console.Write("Enter your choice: ");
         }
 
- 
+        public static void SeedData(Company company)
+        {
+            // Departments
+            Department it = new Department
+            {
+                Name = "IT"
+            };
+
+            Department hr = new Department
+            {
+                Name = "HR"
+            };
+
+            Department finance = new Department
+            {
+                Name = "Finance"
+            };
+
+            company.AddDepartment(it);
+            company.AddDepartment(hr);
+            company.AddDepartment(finance);
+
+            // Employees
+            Employee khaled = new Employee
+            {
+                Name = "Khaled",
+                Salary = 12000m,
+                DepartmentId = 1
+            };
+
+            Employee ahmed = new Employee
+            {
+                Name = "Ahmed",
+                Salary = 9000m,
+                DepartmentId = 1
+            };
+
+            Employee sara = new Employee
+            {
+                Name = "Sara",
+                Salary = 8500m,
+                DepartmentId = 2
+            };
+
+            Employee omar = new Employee
+            {
+                Name = "Omar",
+                Salary = 11000m,
+                DepartmentId = 3
+            };
+
+            Employee mona = new Employee
+            {
+                Name = "Mona",
+                Salary = 7500m,
+                DepartmentId = 2
+            };
+
+            company.AddEmployee(khaled);
+            company.AddEmployee(ahmed);
+            company.AddEmployee(sara);
+            company.AddEmployee(omar);
+            company.AddEmployee(mona);
+
+            // Skills
+            company.AddSkill("C#");
+            company.AddSkill("SQL");
+            company.AddSkill("ASP.NET Core");
+
+            // Complete onboarding for the seeded employees
+            company.CompleteOnboarding();
+            company.CompleteOnboarding();
+            company.CompleteOnboarding();
+            company.CompleteOnboarding();
+            company.CompleteOnboarding();
+        }
+
+
     }
 }
